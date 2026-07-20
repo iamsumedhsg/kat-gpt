@@ -1,7 +1,7 @@
 "use server";
 
 import {prisma} from "@/lib/db";
-import { requireUser } from "@/features/auth/actions/require-user";
+import { requireUser } from "@/features/auth/action/require-user";
 import { revalidatePath } from "next/cache";
 
 export type ConversationListItem = {
@@ -10,8 +10,8 @@ export type ConversationListItem = {
   isPinned: boolean;
   isArchived: boolean;
   lastMessageAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createAt: Date;
+  updateAt: Date;
 };
 
 
@@ -60,8 +60,8 @@ export async function listConversations(): Promise<ConversationListItem[]> {
             isPinned: true,
             isArchived: true,
             lastMessageAt: true,
-            createdAt: true,
-            updatedAt: true,
+            createAt: true,
+            updateAt: true,
         },
     })
 }
