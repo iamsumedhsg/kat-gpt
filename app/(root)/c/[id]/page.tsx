@@ -1,5 +1,7 @@
-import { prisma } from "@/lib/db";
+import { loadChatMessages as loadConversationMessages } from "@/features/ai/actions/chat-store";
+import { ConversationView } from "@/features/conversations/components/conversation-view";
 import { requireUser } from "@/features/auth/action/require-user";
+import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 type ConversationPageProps = {
@@ -20,33 +22,6 @@ async function getConversation(id: string) {
   return conversation;
 }
 
-async function loadChatMessages(id: string) {
-  const conversation = await getConversation(id);
-
-  return conversation.message.map((message) => ({
-    id: message.id,
-    role: message.role,
-    content: message.content,
-  }));
-}
-
-function ConversationView({
-  conversationId,
-  initialMessages,
-}: {
-  conversationId: string;
-  initialMessages: Array<{ id: string; role: string; content: string }>;
-}) {
-  return (
-    <div className="flex h-full flex-col p-6">
-      <h1 className="text-lg font-semibold">Conversation {conversationId}</h1>
-      <pre className="mt-4 whitespace-pre-wrap text-sm">
-        {JSON.stringify(initialMessages, null, 2)}
-      </pre>
-    </div>
-  );
-}
-
 const page = async ({ params }: ConversationPageProps) => {
   const { id } = await params;
 
@@ -56,7 +31,7 @@ const page = async ({ params }: ConversationPageProps) => {
     notFound();
   }
 
-  const initialMessages = await loadChatMessages(id);
+  const initialMessages = await loadConversationMessages(id);
 
   return (
     <ConversationView

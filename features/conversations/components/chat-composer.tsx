@@ -23,7 +23,7 @@ type ChatComposerProps = {
 export function ChatComposer({
   onSend,
   isSending = false,
-  placeholder = "Message ChaiGPT…",
+  placeholder = "Message KatGPT…",
   className,
   autoFocus = false,
 }: ChatComposerProps) {
@@ -85,7 +85,7 @@ export function ChatComposer({
         </InputGroupAddon>
       </InputGroup>
       <p className="mt-2 text-center text-xs text-muted-foreground">
-        ChaiGPT can make mistakes. Check important info.
+        KatGPT can make mistakes. Check important info.
       </p>
     </form>
   );

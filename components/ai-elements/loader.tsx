@@ -1,11 +1,17 @@
-"use client";
+import type { HTMLAttributes } from "react";
+import { Loader2Icon } from "lucide-react";
 
-import * as React from "react";
+import { cn } from "@/lib/utils";
 
-import { Spinner } from "@/components/ui/spinner";
+export type LoaderProps = HTMLAttributes<HTMLDivElement> & {
+  size?: number;
+};
 
-function Loader({ className, ...props }: React.ComponentProps<typeof Spinner>) {
-  return <Spinner className={className} {...props} />;
-}
-
-export { Loader };
+export const Loader = ({ className, size = 16, ...props }: LoaderProps) => (
+  <div
+    className={cn("inline-flex items-center justify-center", className)}
+    {...props}
+  >
+    <Loader2Icon className="animate-spin" size={size} />
+  </div>
+);
